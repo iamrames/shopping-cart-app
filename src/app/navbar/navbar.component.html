@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLinkActive="active" routerLink=''>O</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <button class="btn nav-link"routerLinkActive="active" routerLink= "shopping-cart">Shopping Cart <span class="sr-only">(current)</span></button>
+        </li>
+        <li class="nav-item dropdown" dropdown >
+            <div class="btn-group" dropdown>
+                <button type="button" routerLinkActive="active" class="btn">Username</button>
+                <button id="button-split" type="button" dropdownToggle class="btn dropdown-toggle dropdown-toggle-split"
+                        aria-controls="dropdown-split">
+                    <span class="caret"></span>
+                    <span class="sr-only">Split button!</span>
+                </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">My Orders</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Manage Orders</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Manage Products</a></li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Log Out</a></li>
+            </ul>
+            </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
