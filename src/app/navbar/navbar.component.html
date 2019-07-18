@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" routerLinkActive="active" routerLink=''>O</a>
+    <ul class="navbar-nav"><li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a class="nav-link" routerLink="/"><h1>O</h1></a></li></ul>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,21 +8,19 @@
         <li class="nav-item">
           <button class="btn nav-link"routerLinkActive="active" routerLink= "shopping-cart">Shopping Cart <span class="sr-only">(current)</span></button>
         </li>
-        <li class="nav-item dropdown" dropdown >
-            <div class="btn-group" dropdown>
-                <button type="button" routerLinkActive="active" class="btn">Username</button>
-                <button id="button-split" type="button" dropdownToggle class="btn dropdown-toggle dropdown-toggle-split"
-                        aria-controls="dropdown-split">
-                    <span class="caret"></span>
-                    <span class="sr-only">Split button!</span>
-                </button>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-              <li role="menuitem"><a class="dropdown-item" href="#">My Orders</a></li>
-              <li role="menuitem"><a class="dropdown-item" href="#">Manage Orders</a></li>
-              <li role="menuitem"><a class="dropdown-item" href="#">Manage Products</a></li>
-              <li class="divider dropdown-divider"></li>
-              <li role="menuitem"><a class="dropdown-item" href="#">Log Out</a></li>
-            </ul>
+        <li class="nav-item dropdown">
+            <div class="btn-group mr-3">
+                <button class="btn nav-link">Username</button>
+                <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                  <button class="btn nav-link dropdown-toggle-split" ngbDropdownToggle></button>
+                  <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem routerLink="/my/orders">My Orders</button>
+                    <button ngbDropdownItem routerLink="/admin/orders">Manage Orders</button>
+                    <button ngbDropdownItem routerLink="/admin/products">Manage Products</button>
+                    <div class="dropdown-divider"></div>
+                    <button ngbDropdownItem>Log Out</button>
+                  </div>
+                </div>
             </div>
         </li>
       </ul>
