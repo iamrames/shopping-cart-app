@@ -1,1 +1,3 @@
-<p>login works!</p>
+<button color="primary" mat-raised-button matTooltip="Login with Gmail" matTooltipPosition="after" (click)="login()" *ngIf="!(auth.$user | async)">
+    Login With Gmail
+</button>
