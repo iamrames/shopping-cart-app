@@ -1,8 +1,11 @@
+import { ProductService } from './services/product.service';
+import { CategoryService } from './category.service';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CustomFormsModule } from 'ng2-validation';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +30,9 @@ import { NgbModule, NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng
 import { MatButtonModule, MatProgressBarModule } from '@angular/material';
 import { AuthGuard } from './services/auth-guard.service';
 import { UserService } from './services/user.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { FormsModule } from '@angular/forms';
+import { DataTableModule } from 'ng-angular8-datatable';
 
 @NgModule({
   declarations: [
@@ -40,7 +46,8 @@ import { UserService } from './services/user.service';
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +60,8 @@ import { UserService } from './services/user.service';
       { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
       { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent},
+      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/products/:id', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ]),
@@ -63,13 +72,18 @@ import { UserService } from './services/user.service';
     NgbPaginationModule,
     NgbAlertModule,
     MatButtonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    FormsModule,
+    CustomFormsModule,
+    DataTableModule
   ],
   providers: [
     AuthService,
     AuthGuard,
     UserService,
-    AdminAuthGuard
+    AdminAuthGuard,
+    CategoryService,
+    ProductService
   ],
   bootstrap: [AppComponent]
 })

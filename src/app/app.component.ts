@@ -2,7 +2,6 @@ import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,11 +15,15 @@ export class AppComponent {
               private router: Router) {
 
     this.auth.$user.subscribe(user => {
-      if (user) {
-        const returnUrl = localStorage.getItem('returnUrl');
-        this.userService.save(user);
-        this.router.navigateByUrl(returnUrl);
-      }
+      if (!user) { return; }
+
+      this.userService.save(user);
+
+      const returnUrl = localStorage.getItem('returnUrl');
+      if (!returnUrl) { return; }
+
+      this.router.navigateByUrl(returnUrl);
+      localStorage.removeItem('returnUrl');
     });
   }
 
