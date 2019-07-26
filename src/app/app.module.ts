@@ -33,6 +33,8 @@ import { UserService } from './services/user.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { FormsModule } from '@angular/forms';
 import { DataTableModule } from 'ng-angular8-datatable';
+import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -47,13 +49,15 @@ import { DataTableModule } from 'ng-angular8-datatable';
     AdminProductsComponent,
     AdminOrdersComponent,
     LoginComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ProductFilterComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
+      { path: '', component: ProductsComponent },
       { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },

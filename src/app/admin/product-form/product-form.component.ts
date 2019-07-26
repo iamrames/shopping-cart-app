@@ -2,6 +2,7 @@ import { ProductService } from './../../services/product.service';
 import { CategoryService } from './../../category.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-product-form',
@@ -11,14 +12,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ProductFormComponent {
 
   categories$;
-  product = {};
+  product = {} as Product;
   id;
 
   constructor(private categoryService: CategoryService,
               private productService: ProductService,
               private router: Router,
               private route: ActivatedRoute) {
-    this.categories$ = this.categoryService.getCategories();
+    this.categories$ = this.categoryService.getAll();
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) { this.productService.getProduct(this.id).subscribe(x => this.product = x ); }
