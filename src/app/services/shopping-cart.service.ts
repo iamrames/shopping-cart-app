@@ -18,13 +18,13 @@ export class ShoppingCartService {
     });
   }
 
-  async getCart(): Promise<Observable<ShoppingCart>> {
+  async  getCart(): Promise<Observable<ShoppingCart>> {
     const cartId = await this.getOrCreateCartId();
     const snapShot: Observable<any> = this.db.object('/shopping-carts/' + cartId).snapshotChanges()
         .pipe(
           map(changes => ({ key: changes.payload.key, ...changes.payload.val() }))
         );
-    return snapShot;
+    return snapShot.pipe(map(x => new ShoppingCart(x.items)));
   }
 
   private async getOrCreateCartId(): Promise<string> {

@@ -8,7 +8,8 @@
         <button 
             *ngIf= "getQuantity() === 0; else updateQuantity"
             (click)="addToCart()"
-            class="btn btn-secondary btn-block">
+            class="btn btn-secondary btn-block"
+            [id]="getQuantity()">
             Add to Cart
         </button>
     </div>
