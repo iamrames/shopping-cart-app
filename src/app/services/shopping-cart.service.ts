@@ -12,19 +12,33 @@ export class ShoppingCartService {
 
   constructor(private db: AngularFireDatabase) { }
 
-  private create() {
-    return this.db.list('/shopping-carts').push({
-      dateCreated: new Date().getTime()
-    });
-  }
-
-  async  getCart(): Promise<Observable<ShoppingCart>> {
+  async getCart(): Promise<Observable<ShoppingCart>> {
     const cartId = await this.getOrCreateCartId();
     const snapShot: Observable<any> = this.db.object('/shopping-carts/' + cartId).snapshotChanges()
         .pipe(
           map(changes => ({ key: changes.payload.key, ...changes.payload.val() }))
         );
     return snapShot.pipe(map(x => new ShoppingCart(x.items)));
+  }
+
+  async addToCart(product: Product) {
+    this.updateItem(product, 1);
+  }
+
+  async removeFromCart(product: Product) {
+    this.updateItem(product, -1);
+  }
+
+  async clearCart() {
+    const cartId = await this.getOrCreateCartId();
+    this.db.object('/shopping-carts/' + cartId + '/items').remove();
+  }
+
+
+  private create() {
+    return this.db.list('/shopping-carts').push({
+      dateCreated: new Date().getTime()
+    });
   }
 
   private async getOrCreateCartId(): Promise<string> {
@@ -43,23 +57,22 @@ export class ShoppingCartService {
     );
   }
 
-  async addToCart(product: Product) {
-    this.updateItemQuantiy(product, 1);
-  }
-
-  async removeFromCart(product: Product) {
-    this.updateItemQuantiy(product, -1);
-  }
-
-  private async updateItemQuantiy(product: Product, change: number) {
-    let exist;
+  private async updateItem(product: Product, change: number) {
+    // let exist;
     const cartId = await this.getOrCreateCartId();
     const item$ = this.getItem(cartId, product.key);
     const ref = this.db.database.ref('/shopping-carts/' + cartId + '/items/').child(product.key);
-    ref.once('value', snap => exist = snap.exists());
+    // ref.once('value', snap => exist = snap.exists());
 
     item$.pipe(take(1)).subscribe(item => {
-        ref.update({product, quantity: (item.quantity || 0) + change });
+      const quantity =  (item.quantity || 0) + change;
+      (quantity === 0) ? ref.remove() :
+      ref.update({
+          title: product.title,
+          imageUrl: product.imageUrl,
+          price: product.price,
+          quantity
+        });
     });
   }
 
